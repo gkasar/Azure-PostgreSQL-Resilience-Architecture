@@ -131,16 +131,11 @@ resource "azurerm_postgresql_flexible_server" "default" {
   }
   depends_on = [azurerm_private_dns_zone_virtual_network_link.default]
 }
-resource "azurerm_postgresql_flexible_server" "replica" {
-  name                   = "replica-server"
-  resource_group_name    = azurerm_resource_group.default.name
-  location               = azurerm_resource_group.default.location
-  version                = "13"
-  administrator_login    = "adminTerraform"
-  administrator_password = "Pass@123"
-  sku_name               = "GP_Standard_D2s_v3"
-  storage_mb             = 32768
-  create_mode            = "Replica"
-  source_server_id       = azurerm_postgresql_flexible_server.default.id
+resource "azurerm_postgresql_flexible_server_replica" "replica" {
+  name                = "replica-server-terraform"
+  resource_group_name = azurerm_resource_group.example.name
+  location            = azurerm_resource_group.example.location
+  source_server_id    = azurerm_postgresql_flexible_server.primary.id
 }
+
   
